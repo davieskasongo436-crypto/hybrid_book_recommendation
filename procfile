@@ -1,0 +1,1 @@
+web: gunicorn hybrid_book_recommendation.wsgi
