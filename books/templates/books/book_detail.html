@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- Book cover -->
+  <div class="col-md-4">
+    {% if book.cover %}
+      <img src="{{ book.cover.url }}" alt="{{ book.title }} cover" class="img-fluid rounded mb-3">
+    {% else %}
+      <div class="bg-secondary text-white text-center p-5 rounded">
+        No cover available
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Book details -->
+  <div class="col-md-8">
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong> {{ book.author }}</p>
+    <p><strong>Genre:</strong> {{ book.genre }}</p>
+    <p><strong>Year:</strong> {{ book.published_year }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    <p><strong>Description:</strong> {{ book.description }}</p>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<h2 class="mt-4">Recommended Books</h2>
+<ul class="list-group">
+  {% for rec in recommendations %}
+    <li class="list-group-item">
+      <a href="{% url 'book_detail' rec.id %}" class="fw-bold">{{ rec.title }}</a>
+      <span class="text-muted"> by {{ rec.author }}</span>
+    </li>
+  {% empty %}
+    <li class="list-group-item">No recommendations available.</li>
+  {% endfor %}
+</ul>
+
+<!-- Back button -->
+<a href="{% url 'book_list' %}" class="btn btn-secondary mt-3">← Back to Catalog</a>
+{% endblock %}
